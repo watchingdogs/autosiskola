@@ -37,4 +37,4 @@ dates = df.columns.tolist()[2:4]
 df.columns = ["kepzo_nev", "kepzo_azonosito", f"AM_elm_{dates[0]}", f"AM_elm_{dates[1]}", f"AM_forg_{dates[0]}", f"AM_forg_{dates[1]}", f"A1A2Asum_elm_{dates[0]}", f"A1A2Asum_elm_{dates[1]}", f"A1A2Asum_forg_{dates[0]}", f"A1A2Asum_forg_{dates[1]}", f"B_elm_{dates[0]}", f"B_elm_{dates[1]}", f"B_forg_{dates[0]}", f"B_forg_{dates[1]}", f"C_elm_{dates[0]}", f"C_elm_{dates[1]}", f"C_forg_{dates[0]}", f"C_forg_{dates[1]}"]
 
 # Save the DataFrame to a CSV file
-df.to_csv('data/vsm.csv', index=True, header=True)
+df.to_csv(f'data/vsm_{dates[0]}-{dates[1]}.csv', index=True, header=True)

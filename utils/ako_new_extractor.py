@@ -59,4 +59,4 @@ df = df.drop(columns=[df.columns[8]])
 df.columns = ["kepzo_nev", "kepzo_azonosito", f"AM_{dates[0]}", f"AM_{dates[1]}", f"A1A2Asum_{dates[0]}", f"A1A2Asum_{dates[1]}", f"B_{dates[0]}", f"B_{dates[1]}", f"C_{dates[0]}", f"C_{dates[1]}"]
 
 # export to csv
-df.to_csv('data/ako.csv', index=True, header=True)
+df.to_csv(f'data/ako_{dates[0]}-{dates[1]}.csv', index=True, header=True)
