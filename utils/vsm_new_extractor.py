@@ -1,8 +1,13 @@
 import pdfplumber
 import pandas as pd
+import requests
+import io
 
-# Open the PDF file
-with pdfplumber.open('vsm_2023_4_2024_1_modositott.pdf') as pdf:
+
+response = requests.get("https://vizsgakozpont.hu/uploads/2024/dokumentumok/vsm_2023_4_2024_1_modositott.pdf")
+file = io.BytesIO(response.content)
+
+with pdfplumber.open(file) as pdf:
     # Initialize an empty list to store the tables from each page
     all_tables = []
     
@@ -31,7 +36,5 @@ df.index.name = "sorszam"
 dates = df.columns.tolist()[2:4]
 df.columns = ["kepzo_nev", "kepzo_azonosito", f"AM_elm_{dates[0]}", f"AM_elm_{dates[1]}", f"AM_forg_{dates[0]}", f"AM_forg_{dates[1]}", f"A1A2Asum_elm_{dates[0]}", f"A1A2Asum_elm_{dates[1]}", f"A1A2Asum_forg_{dates[0]}", f"A1A2Asum_forg_{dates[1]}", f"B_elm_{dates[0]}", f"B_elm_{dates[1]}", f"B_forg_{dates[0]}", f"B_forg_{dates[1]}", f"C_elm_{dates[0]}", f"C_elm_{dates[1]}", f"C_forg_{dates[0]}", f"C_forg_{dates[1]}"]
 
-print(df)
-
 # Save the DataFrame to a CSV file
-df.to_csv('vsm_data.csv')
+df.to_csv('data/vsm.csv', index=True, header=True)

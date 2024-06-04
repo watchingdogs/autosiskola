@@ -16,7 +16,6 @@
             margin: 0;
         }
     </style>
-    <script src="static/geojson.js"></script>
 </head>
     <body>
         <div id="map"></div>
@@ -27,11 +26,18 @@
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
             }).addTo(map);
 
-            L.geoJSON(data, {
-                onEachFeature: function (feature, layer) {
-                    layer.bindPopup(`<div><h3>${feature.properties.name}</h3><p><strong>Category:</strong> ${feature.properties.category}</p><p><strong>Rating:</strong> ${feature.properties.rating}</p><p><strong>Email:</strong> <a href="mailto:${feature.properties.email}">${feature.properties.email}</a></p><p><strong>Web:</strong> <a href="${feature.properties.web}" target="_blank">${feature.properties.web}</a></p><p><strong>Phone:</strong> ${feature.properties.phone}</p><p><strong>Address:</strong> ${feature.properties.address}</p><p><strong>About:</strong> ${feature.properties.about}</p><p><strong>NKHAzon:</strong> ${feature.properties.nkhazon}</p><p><strong>Tags:</strong> ${feature.properties.tags.join(', ')}</p><p><strong>Openings:</strong> ${feature.properties.openings}</p></div>`);
-                }
-            }).addTo(map);
+            fetch("static/iskolak.geojson")
+                .then(function(response) {
+                    return response.json()
+                })
+                .then(function(data) {
+                    L.geoJson(data, {
+                        onEachFeature: function (feature, layer) {
+                            layer.bindPopup(`<div><h3>${feature.properties.name}</h3><p><strong>Category:</strong> ${feature.properties.category}</p><p><strong>Rating:</strong> ${feature.properties.rating}</p><p><strong>Email:</strong> <a href="mailto:${feature.properties.email}">${feature.properties.email}</a></p><p><strong>Web:</strong> <a href="${feature.properties.web}" target="_blank">${feature.properties.web}</a></p><p><strong>Phone:</strong> ${feature.properties.phone}</p><p><strong>Address:</strong> ${feature.properties.address}</p><p><strong>About:</strong> ${feature.properties.about}</p><p><strong>NKHAzon:</strong> ${feature.properties.nkhazon}</p><p><strong>Tags:</strong> ${feature.properties.tags.join(', ')}</p><p><strong>Openings:</strong> ${feature.properties.openings}</p></div>`);
+                }}).addTo(map);})
+                .catch(function(error) {
+                    console.log(`Error: ${error}`)
+                })
         </script>
     </body>
 </html>

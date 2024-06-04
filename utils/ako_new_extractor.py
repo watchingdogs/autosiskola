@@ -1,8 +1,13 @@
 import pdfplumber
 import pandas as pd
+import io
+import requests
 
-# Open the PDF file
-with pdfplumber.open('ako_2023_4_2024_1.pdf') as pdf:
+
+response = requests.get("https://vizsgakozpont.hu/uploads/2024/dokumentumok/ako_2023_4_2024_1.pdf")
+file = io.BytesIO(response.content)
+
+with pdfplumber.open(file) as pdf:
     # Initialize an empty list to store the tables from each page
     all_tables = []
     
@@ -53,4 +58,5 @@ df = df.drop(columns=[df.columns[8]])
 # Rename columns
 df.columns = ["kepzo_nev", "kepzo_azonosito", f"AM_{dates[0]}", f"AM_{dates[1]}", f"A1A2Asum_{dates[0]}", f"A1A2Asum_{dates[1]}", f"B_{dates[0]}", f"B_{dates[1]}", f"C_{dates[0]}", f"C_{dates[1]}"]
 
-print(df)
+# export to csv
+df.to_csv('data/ako.csv', index=True, header=True)
