@@ -43,8 +43,7 @@ def save_geojson(data, file_path):
 
 # Process the data
 geojson_file_path = 'static/iskolak.geojson'  # Path to save the GeoJSON file
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.3'}
-data = requests.get('https://edukresz.hu/edukresz-partnerek/src/poi.php', headers=headers)
+data = requests.get('https://edukresz.hu/edukresz-partnerek/src/poi.php', headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.3'})
 geojson_data = convert_to_geojson(data.json())
 save_geojson(geojson_data, geojson_file_path)
 
