@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
 
-#requests.get(f"http://api.positionstack.com/v1/forward?access_key={}&limit=1&country=HU&query=7621 Pécs, Rákóczi út 60. (Millenium üzletház)").content
 
 def get_institutes():
     "Összegyűjti az intézmények nevét és NKH azonosítóját a vizsgakozpont.hu-ról. (Nincs benne minden inzétmény!)"
@@ -48,11 +47,10 @@ def extract_table_data(nkhid):
 
             data.append([types[i], jogstipus, tipus] + cellList)
 
+    for item in data:
+        item[4] = item[4].replace('Q', '')
+        item[3] = item[3].replace('.', '')
+
     return data
 
-
-# print(extract_table_data('4241'))
-
-
-# 4117
-# 9948
+# print(extract_table_data('4117'))
