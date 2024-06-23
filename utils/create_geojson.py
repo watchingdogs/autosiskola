@@ -15,9 +15,9 @@ def category_finder(df):
     return tags
 
 def save_geojson(data):
-    with open('static/iskolak.geojson', 'w', encoding='utf-8') as file:
+    with open('app/static/iskolak.geojson', 'w', encoding='utf-8') as file:
         # file.write("var data = ")
-        json.dump(data.json(), file, ensure_ascii=False, indent=4)
+        json.dump(data, file, ensure_ascii=False, indent=4)
 
 
 GMAPS_KEY = os.environ["GMAPS_API_KEY"]
@@ -28,36 +28,42 @@ institute_ids = sorted([i['nkhid'] for i in institute_list])
 edukresz_geojson = edukresz_to_geojson.extractEdukresz()
 
 total_ids = len(institute_ids)
-counter = 0
 
 for id in institute_ids:
-    counter += 1
-    print(f"{counter}/{total_ids}")
+    kaverror = False
 
     formatted = institute_extractor.extract_table_data(id)
     if formatted['stats'] == {}:
         print(f"ID {id} hibát adott a KAV API-ban.")
-        continue
-    overall = institute_extractor.calculate_overall_score(formatted)
+        kaverror = True
+    else:
+        overall = institute_extractor.calculate_overall_score(formatted)
+    
      
     id_found = False
     for feature in edukresz_geojson['features']:
         if feature['properties']['nkhid'] == id:
             # Benne volt az Edukresz listájában.
             id_found = True
-
             feature['properties']['tags'] = category_finder(kepzo_df)
             feature['properties']['etitan'] = True
-            feature['properties']['overall'] = overall
-            feature['properties']['stats'] = formatted['stats']
+            feature['properties']['overall'] = overall if not kaverror else None
+            feature['properties']['stats'] = formatted['stats'] if not kaverror else None
 
             break
             
     if not id_found:
         # Nincs benne a listában, teljesen új rekord kell.
         print(f"ID {id} not found in the feature list.")
-        address = kepzo_df.loc[kepzo_df[2] == str(int(id))][3].values[0]
+        try:
+            address = kepzo_df.loc[kepzo_df[2] == str(int(id))][3].values[0]
+        except IndexError:
+            print(f"ID {id} nem található a képzőszervek listájában.")
+            continue
         re = requests.get(f"https://maps.googleapis.com/maps/api/geocode/json?address={requests.utils.quote(address)}&key={GMAPS_KEY}").json()
+        if not re['results']:
+            print(f"ID {id} címét ({address}) nem lehetett geokódolni.")
+            continue
 
         feature = {
             "type": "Feature",
@@ -74,8 +80,8 @@ for id in institute_ids:
                 "nkhid": id,
                 "tags": category_finder(kepzo_df),
                 "etitan": False,
-                "overall": overall,
-                "stats": formatted['stats']
+                "overall": overall if not kaverror else None,
+                "stats": formatted['stats'] if not kaverror else None
             }
         }
 

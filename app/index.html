@@ -1,43 +1,55 @@
 <!DOCTYPE html>
 <head>
     <title>Autós iskolák térképe</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""></script>
     <style>
-        #map {
-            width: 100%;
-            height: 100vh;
-        }
-        body {
+        body, html {
+            height: 100%;
             margin: 0;
+        }
+        .container-fluid {
+            display: flex;
+            height: 100%;
+        }
+        .sidebar {
+            width: 300px;
+            background: #f8f9fa;
+            padding: 10px;
+        }
+        #license-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        #license-types label {
+            display: inline-block;
+            margin-right: 4px;
+        }
+        #map {
+            flex: 1;
         }
     </style>
 </head>
     <body>
-        <div id="map"></div>
-        <script>
-            var map = L.map('map').setView([47.168463, 19.395633], 8);
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-            }).addTo(map);
-
-            fetch("static/iskolak.geojson")
-                .then(function(response) {
-                    return response.json()
-                })
-                .then(function(data) {
-                    L.geoJson(data, {
-                        onEachFeature: function (feature, layer) {
-                            layer.bindPopup(`<div><h3>${feature.properties.name}</h3><p><strong>Category:</strong> ${feature.properties.category}</p><p><strong>Rating:</strong> ${feature.properties.rating}</p><p><strong>Email:</strong> <a href="mailto:${feature.properties.email}">${feature.properties.email}</a></p><p><strong>Web:</strong> <a href="${feature.properties.web}" target="_blank">${feature.properties.web}</a></p><p><strong>Phone:</strong> ${feature.properties.phone}</p><p><strong>Address:</strong> ${feature.properties.address}</p><p><strong>About:</strong> ${feature.properties.about}</p><p><strong>NKHAzon:</strong> ${feature.properties.nkhazon}</p><p><strong>Tags:</strong> ${feature.properties.tags.join(', ')}</p><p><strong>Openings:</strong> ${feature.properties.openings}</p></div>`);
-                }}).addTo(map);})
-                .catch(function(error) {
-                    console.log(`Error: ${error}`)
-                })
-        </script>
+        <div class="container-fluid">
+            <div class="sidebar">
+                <h4>Select License Type</h4>
+                <div id="license-types"></div>
+                <h4>Top Schools</h4>
+                <ol id="top-schools"></ol>
+            </div>
+            <div id="map"></div>
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+            <script src="static/main.js"></script>
+        </div>
     </body>
 </html>
+
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <h4>Select License Type</h4>
+        <div id="license-types"></div>
+    </div>
+    <div id="map"></div>
+</div>
