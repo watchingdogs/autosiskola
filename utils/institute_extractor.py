@@ -17,7 +17,7 @@ def get_institutes():
         option_value = option.get('value')
         if option_value:  # Only add if the value is not None
             options_list.append({'name': option_text, 'nkhid': option_value})
-
+    
     return options_list
 
 
@@ -47,10 +47,67 @@ def extract_table_data(nkhid):
 
             data.append([types[i], jogstipus, tipus] + cellList)
 
-    for item in data:
-        item[4] = item[4].replace('Q', '')
-        item[3] = item[3].replace('.', '')
-
+    data = format_data(data)
     return data
 
-# print(extract_table_data('4117'))
+
+def format_data(data):
+    "Return the stats dictionary."
+    result = {"stats": {}}
+
+    for entry in data:
+        category, license_type, subject, year, quarter, value = entry
+
+        if category not in result["stats"]:
+            result["stats"][category] = {}
+        
+        if license_type not in result["stats"][category]:
+            result["stats"][category][license_type] = {}
+
+        if subject not in result["stats"][category][license_type]:
+            result["stats"][category][license_type][subject] = []
+
+        result["stats"][category][license_type][subject].append({
+            "year": int(year.replace(".", "")),
+            "quarter": int(quarter.split('.')[0].replace("Q", "").strip()),
+            "value": value
+        })
+
+    return result
+                    
+
+def calculate_overall_score(data):
+    """
+    Kiszámolja az iskola összpontszámát.
+    Ehhez veszi az átlagos képzési óraszámot, és a forgalmi vizsga sikerességét.
+    Az elméleti vizsga nincs beleszámolva, mivel több mint az iskolák fele E-Titánt használ. Később feature?
+    """
+    vsm_keys = set(data['stats']['VSM'].keys())
+    ako_keys = set(data['stats']['ÁKÓ'].keys())
+    common_keys = sorted(vsm_keys.intersection(ako_keys))
+    overall = {}
+
+    for licensetype in common_keys:
+        values = []
+
+        for metrics in data['stats']['VSM'][licensetype]['forgalom']:
+            if metrics['value'] != 'Nincs adat':
+                values.append(float(metrics['value'].split('%')[0].strip()))
+
+        # Az ÁKÓ-t először normalizálni kell, mert az értékek fordítottak. Azért kell a 10000, mert ha csak 100-zal osztjuk, akkor 1 az érték max, nem 100.
+        for metrics in data['stats']['ÁKÓ'][licensetype]['gyakorlat']:
+            if metrics['value'] != 'Nincs adat':
+                values.append(10000 / float(metrics['value'].split('%')[0].strip()))
+
+        if values:
+            overall[licensetype] = round(sum(values) / len(values), 2)
+        else:
+            overall[licensetype] = 0
+
+    return overall
+
+'''
+formatted = extract_table_data('3194')
+overall = calculate_overall_score(formatted)
+print(overall)
+'''
