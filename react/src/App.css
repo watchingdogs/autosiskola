@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+.sidebar > p, .sidebar > h2, .sidebar > * {
+  color: white;
+  scrollbar-color: #fff #202632 ;
+}
+
+label {
+  color: white;
+}
+
+.container-fluid {
+  display: flex;
+  height: 100%;
+}
+.sidebar {
+  overflow-y: auto;
+  width: 30vw;
+  min-width: 300px;
+  background:#202632;
+  padding: 10px;
+  padding-bottom: 0;
+}
+#license-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+#license-types label {
+  display: inline-block;
+  margin-right: 4px;
+}
+#map {
+  flex: 1;
+}
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 6px;
+  background:
+    conic-gradient(from 135deg at top,currentColor 90deg, #0000 0) 0 calc(50% - 4px)/17px 8.5px,
+    radial-gradient(farthest-side at bottom left,#0000 calc(100% - 6px),currentColor calc(100% - 5px) 99%,#0000) top right/50%  50% content-box content-box,
+    radial-gradient(farthest-side at top        ,#0000 calc(100% - 6px),currentColor calc(100% - 5px) 99%,#0000) bottom   /100% 50% content-box content-box;
+  background-repeat: no-repeat;
+  animation: l11 1s infinite linear;
+}
+@keyframes l11{ 
+  100%{transform: rotate(1turn)}
+}

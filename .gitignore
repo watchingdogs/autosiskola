@@ -20,6 +20,7 @@ parts/
 sdist/
 var/
 wheels/
+react/build/
 share/python-wheels/
 *.egg-info/
 .installed.cfg
