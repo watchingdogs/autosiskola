@@ -24,14 +24,12 @@ jobs:
           cd react
           npm install
 
-      - name: Unset CI variable to bypass build warnings
-        run: |
-          unset CI
-
       - name: Build the React app
         run: |
           cd react
           npm run build
+        env:
+          CI: false # bypass ESLint
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3.0.1
