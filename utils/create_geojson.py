@@ -15,7 +15,7 @@ def category_finder(df):
     return tags
 
 def save_geojson(data):
-    with open('app/static/iskolak.geojson', 'w', encoding='utf-8') as file:
+    with open('react/src/data/iskolak.json', 'w', encoding='utf-8') as file:
         # file.write("var data = ")
         json.dump(data, file, ensure_ascii=False, indent=4)
 
