@@ -24,6 +24,10 @@ jobs:
           cd react
           npm install
 
+      - name: Unset CI variable to bypass build warnings
+        run: |
+          unset CI
+
       - name: Build the React app
         run: |
           cd react
