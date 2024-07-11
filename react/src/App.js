@@ -23,7 +23,6 @@ function Dragger({category, setTopSchools}) {
   }, [category])
 
   function MapUpdater() {
-    console.log(category)
     map.eachLayer((layer) => {
       if (layer instanceof L.Marker) {
         map.removeLayer(layer);
@@ -128,20 +127,22 @@ if (category.length === 0) {
       schoolsInBounds.push(school);  
     }
     })
-    var maxOverall = 0;
-    var topSchools = schoolsInBounds.map(function(feature) {
-      category.forEach(function(type) {
-          if (feature.properties.overall && feature.properties.overall[type]) {
-              console.log(feature.properties.overall[type])
-              maxOverall = Math.max(maxOverall, feature.properties.overall[type]);
-          }
-      });
-      return {
-          name: feature.properties.name,
+    
+    var topSchools = []
 
-          overall: maxOverall
-      };
-  })
+    for (var i = 0; i < schoolsInBounds.length; i++) {
+      var school = schoolsInBounds[i];
+      for (var j = 0; j < category.length; j++) {
+        if (school.properties.overall && school.properties.overall[category[j]]) {
+          topSchools.push({
+            name: school.properties.name + " " + category[j] + " kategóriában",
+            overall: school.properties.overall[category[j]]
+          })
+        }
+      }
+    }
+
+console.log(topSchools)
 
  topSchools =  topSchools.sort(function(a, b) {
       return b.overall - a.overall;
@@ -178,7 +179,6 @@ export const MainMap = (props) => {
     }));
     
     var mapCenter = mapBounds.getCenter();
-    console.log(mapBounds)
   
 
     return (
@@ -233,29 +233,10 @@ function LicenseSelector({setData}) {
   );
 }
 
-function SearchBar({ topSchools }) {
-  
-  return (
-    <div>
-      <input type="text" list="searchResults" onChange={(e) => console.log(e.target.value)}  id="searchBar" placeholder="Keresés..."></input>
-      <datalist id="searchResults">
-        {topSchools.map((school) => {
-          return (
-            <option value={school.name} />
-          )
-        })}
-      </datalist>
-    </div>
-  )
-
-}
-    
-
-
 function SchoolTable({topSchools}) {
 
   if (topSchools.length === 0) {
-    return <div>Nincsenek betöltött iskolák!</div>
+    return <div>Nincsenek megjeleníthető adatok!<strong> (a rangsor csak az A, B és C kategóriák esetén elérhető)</strong></div>
   }
 
   if (topSchools[0] == "inprogress") {
@@ -307,9 +288,6 @@ function App() {
                     <LicenseSelector setData={setCategory} />
                 </div>
                 <h2>Legjobb* iskolák</h2>
-                <div>
-                    <SearchBar topSchools={topSchools} />
-                </div>
                 <div style={{height: "65vh", overflowY: "scroll"}}>
                     <SchoolTable topSchools={topSchools} />
                 </div>
