@@ -18,6 +18,11 @@ L.Icon.Default.mergeOptions({
 function Dragger({category, setTopSchools}) {
   var colors = ["red", "green", "gold", "blue", "grey", "orange", "black", "violet", "yellow"];
   
+
+  function jumpAndZoom(lat, lon, zoom) {
+    map.setView([lat, lon], zoom);
+  }
+
   React.useEffect(() => {
     MapUpdater();
   }, [category])
@@ -136,7 +141,8 @@ if (category.length === 0) {
         if (school.properties.overall && school.properties.overall[category[j]]) {
           topSchools.push({
             name: school.properties.name + " " + category[j] + " kategóriában",
-            overall: school.properties.overall[category[j]]
+            overall: school.properties.overall[category[j]],
+            onClick: () => jumpAndZoom(school.geometry.coordinates[1], school.geometry.coordinates[0], 23)
           })
         }
       }
@@ -260,7 +266,7 @@ function SchoolTable({topSchools}) {
         {topSchools.map((school) => {
           return (
                 <tr>
-                  <td>{school.name}</td>
+                  <td onClick={school.onClick}>{school.name}</td>
                   <td>{school.overall}</td>
                 </tr>
               )
