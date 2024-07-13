@@ -191,7 +191,7 @@ export const MainMap = (props) => {
         <MapContainer loadingControl={true}  center={props.center} zoom={props.zoom} style={{height: "100vh", width: "100%"}}>
           <Dragger category={props.data} setTopSchools={props.setTopSchools} />
           <TileLayer
-            url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
+            url="https://api.mapbox.com/styles/v1/erzsil196/clxrvhy6w00p301qw1ibgez6w/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXJ6c2lsMTk2IiwiYSI6ImNseHJ2OWU5ODB5bmEyc3F3d210NXVkczIifQ.Xl_oYoTm89cQLKi8Z3HsrQ"
           />
         </MapContainer>
     )
@@ -289,7 +289,7 @@ function App() {
     <div className="App">
        <div className="container-fluid">
             <div className="sidebar">
-                <h2>Jogosítvány típus</h2>
+                <h2>Jogosítvány kategóriák</h2>
                 <div>
                     <LicenseSelector setData={setCategory} />
                 </div>
