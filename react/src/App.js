@@ -15,17 +15,21 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
 
-function Dragger({category, setTopSchools}) {
+function Dragger({category, setTopSchools, latlong}) {
   var colors = ["red", "green", "gold", "blue", "grey", "orange", "black", "violet", "yellow"];
   
-
-  function jumpAndZoom(lat, lon, zoom) {
-    map.setView([lat, lon], zoom);
-  }
 
   React.useEffect(() => {
     MapUpdater();
   }, [category])
+
+    React.useEffect(() => {
+      if (latlong.length === 0) {
+        return;
+      }
+      map.setView([latlong[0], latlong[1]], 23)
+    }, [latlong])
+
 
   function MapUpdater() {
     map.eachLayer((layer) => {
@@ -139,11 +143,18 @@ if (category.length === 0) {
       var school = schoolsInBounds[i];
       for (var j = 0; j < category.length; j++) {
         if (school.properties.overall && school.properties.overall[category[j]]) {
+          var lat = parseFloat(school.geometry.coordinates[1]);
+          var lng = parseFloat(school.geometry.coordinates[0]);
           topSchools.push({
             name: school.properties.name + " " + category[j] + " kategóriában",
             overall: school.properties.overall[category[j]],
-            onClick: () => jumpAndZoom(school.geometry.coordinates[1], school.geometry.coordinates[0], 23)
+            lat: lat,
+            lng: lng,
+            onClick: function() {
+              alert(lat + " " + lng)
+            }
           })
+          console.log(school.properties.name + " " + category[j] + " kategóriában ", lat, lng)
         }
       }
     }
@@ -185,11 +196,10 @@ export const MainMap = (props) => {
     }));
     
     var mapCenter = mapBounds.getCenter();
-  
 
     return (
         <MapContainer loadingControl={true}  center={props.center} zoom={props.zoom} style={{height: "100vh", width: "100%"}}>
-          <Dragger category={props.data} setTopSchools={props.setTopSchools} />
+          <Dragger category={props.data} setTopSchools={props.setTopSchools} latlong={props.latlong}/>
           <TileLayer
             url="https://api.mapbox.com/styles/v1/erzsil196/clxrvhy6w00p301qw1ibgez6w/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXJ6c2lsMTk2IiwiYSI6ImNseHJ2OWU5ODB5bmEyc3F3d210NXVkczIifQ.Xl_oYoTm89cQLKi8Z3HsrQ"
           />
@@ -239,7 +249,7 @@ function LicenseSelector({setData}) {
   );
 }
 
-function SchoolTable({topSchools}) {
+function SchoolTable({topSchools, setLatlong}) {
 
   if (topSchools.length === 0) {
     return <div>Nincsenek megjeleníthető adatok!<strong> (a rangsor csak az A, B és C kategóriák esetén elérhető)</strong></div>
@@ -266,7 +276,7 @@ function SchoolTable({topSchools}) {
         {topSchools.map((school) => {
           return (
                 <tr>
-                  <td onClick={school.onClick}>{school.name}</td>
+                  <td onClick={() => setLatlong([school.lat, school.lng])}>{school.name}</td>
                   <td>{school.overall}</td>
                 </tr>
               )
@@ -284,6 +294,7 @@ function App() {
 
   const [ category, setCategory ] = React.useState([]);
   const [ topSchools, setTopSchools ] = React.useState([]);
+  const [ latlong, setLatlong ] = React.useState([]);
 
   return (
     <div className="App">
@@ -295,11 +306,11 @@ function App() {
                 </div>
                 <h2>Legjobb* iskolák</h2>
                 <div style={{height: "65vh", overflowY: "scroll"}}>
-                    <SchoolTable topSchools={topSchools} />
+                    <SchoolTable topSchools={topSchools} setLatlong={setLatlong}/>
                 </div>
             </div>
             <div className="map" style={{height: "100vh", width: "100%"}}>
-                <MainMap center={[47.168463, 19.395633]} zoom={8} data={category} setTopSchools={setTopSchools} />
+                <MainMap center={[47.168463, 19.395633]} zoom={8} data={category} setTopSchools={setTopSchools} latlong={latlong}/>
             </div>
         </div>
     </div>
