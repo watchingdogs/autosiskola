@@ -198,7 +198,7 @@ export const MainMap = (props) => {
     var mapCenter = mapBounds.getCenter();
 
     return (
-        <MapContainer loadingControl={true}  center={props.center} zoom={props.zoom} style={{height: "100vh", width: "100%"}}>
+        <MapContainer loadingControl={true}  center={props.center} zoom={props.zoom} style={{height: "100vh", width: "100%"}} minZoom={9}>
           <Dragger category={props.data} setTopSchools={props.setTopSchools} latlong={props.latlong}/>
           <TileLayer
             url="https://api.mapbox.com/styles/v1/erzsil196/clxrvhy6w00p301qw1ibgez6w/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXJ6c2lsMTk2IiwiYSI6ImNseHJ2OWU5ODB5bmEyc3F3d210NXVkczIifQ.Xl_oYoTm89cQLKi8Z3HsrQ"
@@ -269,7 +269,7 @@ function SchoolTable({topSchools, setLatlong}) {
       <thead>
         <tr>
           <th>Iskola neve</th>
-          <th>Átlag</th>
+          <th>Pontszám</th>
         </tr>
       </thead>
       <tbody>
