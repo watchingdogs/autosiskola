@@ -35,11 +35,7 @@ function Dragger({category, setTopSchools, latlong, setMarkers}) {
 
 
   function MapUpdater() {
-    map.eachLayer((layer) => {
-      if (layer instanceof L.Marker) {
-        map.removeLayer(layer);
-      }
-    })
+  setMarkers([]);
   var labels = document.getElementsByName('categoryLabel');
   for (var i = 0; i < labels.length; i++) {
     labels[i].style.color = 'white';
