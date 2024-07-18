@@ -6,6 +6,7 @@ import './App.css';
 import iskolak from './data/iskolak.json';
 import "leaflet-loading";
 import "leaflet-loading/src/Control.Loading.css"
+import MarkerClusterGroup from "@changey/react-leaflet-markercluster";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -15,9 +16,11 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
 
-function Dragger({category, setTopSchools, latlong}) {
+function Dragger({category, setTopSchools, latlong, setMarkers}) {
   var colors = ["red", "green", "gold", "blue", "grey", "orange", "black", "violet", "yellow"];
   
+
+  var markerComponentArray = [];
 
   React.useEffect(() => {
     MapUpdater();
@@ -115,8 +118,15 @@ function Dragger({category, setTopSchools, latlong}) {
             }
         });
 
-          var marker = L.marker(latlng, {icon: icon}).bindPopup(popUpText);
-          marker.addTo(map);
+          var marker = (
+            <Marker position={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]} icon={icon}>
+              <Popup>
+                <div dangerouslySetInnerHTML={{__html: popUpText}} />
+              </Popup>
+            </Marker>
+          )
+          markerComponentArray.push(marker);
+          setMarkers(markerComponentArray);
         }
       })
     }
@@ -190,6 +200,15 @@ console.log(topSchools)
 
 export const MainMap = (props) => {
 
+  const [markers, setMarkers] = React.useState([]);
+
+  const createClusterCustomIcon = function (cluster) {
+    return L.divIcon({
+      html: `<span style="background-color: #202632; color: whitesmoke; border-radius: 75%; padding: 15px 15px; font-size: 20px">${cluster.getChildCount()}</span>`,
+      className: 'marker-cluster-custom',
+      iconSize: L.point(40, 40, true),
+    });
+  }
   
     var mapBounds = L.latLngBounds(iskolak.features.map(function(feature) {
         return L.geoJSON(feature).getBounds();
@@ -198,11 +217,14 @@ export const MainMap = (props) => {
     var mapCenter = mapBounds.getCenter();
 
     return (
-        <MapContainer loadingControl={true}  center={props.center} zoom={props.zoom} style={{height: "100vh", width: "100%"}} minZoom={9}>
-          <Dragger category={props.data} setTopSchools={props.setTopSchools} latlong={props.latlong}/>
+        <MapContainer loadingControl={true}  center={props.center} zoom={props.zoom} style={{height: "100vh", width: "100%"}}>
+          <Dragger category={props.data} setTopSchools={props.setTopSchools} latlong={props.latlong} setMarkers={setMarkers}/>
           <TileLayer
             url="https://api.mapbox.com/styles/v1/erzsil196/clxrvhy6w00p301qw1ibgez6w/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXJ6c2lsMTk2IiwiYSI6ImNseHJ2OWU5ODB5bmEyc3F3d210NXVkczIifQ.Xl_oYoTm89cQLKi8Z3HsrQ"
           />
+          <MarkerClusterGroup iconCreateFunction={createClusterCustomIcon}>
+            {markers}
+          </MarkerClusterGroup>
         </MapContainer>
     )
 }
