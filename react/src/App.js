@@ -7,6 +7,8 @@ import iskolak from './data/iskolak.json';
 import "leaflet-loading";
 import "leaflet-loading/src/Control.Loading.css"
 import MarkerClusterGroup from "@changey/react-leaflet-markercluster";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -218,7 +220,7 @@ export const MainMap = (props) => {
           <TileLayer
             url="https://api.mapbox.com/styles/v1/erzsil196/clxrvhy6w00p301qw1ibgez6w/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXJ6c2lsMTk2IiwiYSI6ImNseHJ2OWU5ODB5bmEyc3F3d210NXVkczIifQ.Xl_oYoTm89cQLKi8Z3HsrQ"
           />
-          <MarkerClusterGroup iconCreateFunction={createClusterCustomIcon}>
+          <MarkerClusterGroup >
             {markers}
           </MarkerClusterGroup>
         </MapContainer>
