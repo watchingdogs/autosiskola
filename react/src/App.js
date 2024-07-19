@@ -124,8 +124,15 @@ function Dragger({category, setTopSchools, latlong, setMarkers}) {
             }
         });
 
-          var marker = L.marker(latlng, {icon: icon}).bindPopup(popUpText);
-          marker.addTo(map);
+          var marker = (
+            <Marker position={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]} icon={icon}>
+              <Popup>
+                <div dangerouslySetInnerHTML={{__html: popUpText}} />
+              </Popup>
+            </Marker>
+          )
+          markerComponentArray.push(marker);
+          setMarkers(markerComponentArray);
         }
       })
     }
@@ -195,8 +202,8 @@ export const MainMap = (props) => {
 
   const [markers, setMarkers] = React.useState([]);
     return (
-        <MapContainer loadingControl={true}  center={props.center} zoom={props.zoom} style={{height: "100vh", width: "100%"}} minZoom={9}>
-          <Dragger category={props.data} setTopSchools={props.setTopSchools} latlong={props.latlong}/>
+        <MapContainer loadingControl={true}  center={props.center} zoom={props.zoom} style={{height: "100vh", width: "100%"}}>
+          <Dragger category={props.data} setTopSchools={props.setTopSchools} latlong={props.latlong} setMarkers={setMarkers}/>
           <TileLayer
             url="https://api.mapbox.com/styles/v1/erzsil196/clxrvhy6w00p301qw1ibgez6w/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXJ6c2lsMTk2IiwiYSI6ImNseHJ2OWU5ODB5bmEyc3F3d210NXVkczIifQ.Xl_oYoTm89cQLKi8Z3HsrQ"
           />

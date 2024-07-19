@@ -1,9 +1,9 @@
 {
   "name": "autosiskola",
   "version": "0.1.0",
-  "homepage": "https://watchingdogs.github.io/autosiskola",
   "private": true,
   "dependencies": {
+    "@changey/react-leaflet-markercluster": "^4.0.0-rc1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -14,6 +14,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-leaflet": "^4.2.1",
+    "react-leaflet-markercluster": "^3.0.0-rc1",
     "react-scripts": "5.0.1",
     "reactjs-popup": "^2.0.6",
     "universal-cookie": "^7.1.4",
