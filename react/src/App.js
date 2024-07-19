@@ -317,13 +317,13 @@ function App() {
   return (
     <div className="App">
                       <PopupComponent open={open} closeOnDocumentClick onClose={closeModal}>
-        <div className="modal" style={{backgroundColor: "white", width: "50vw", height: "50vh", borderRadius: "10px"}} >
+        <div className="modal" style={{backgroundColor: "white", width: "70vw", height: "70vh", borderRadius: "10px"}} >
           <p className="close" onClick={closeModal} style={{textAlign: "right", cursor: "pointer", fontSize: "2em", marginRight: "10px", marginBottom: "0px"}}>
             &times;
           </p>
           <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
-          <h1 style={{ marginTop: "0px", marginBottom: "5px", marginLeft: "10px", marginRight: "10px"}}>Kedves felhasználó!</h1>
-          <div style={{ overflowY: "scroll", height: "27vh", width: "40vw"}}>
+          <h1 style={{ marginTop: "0px", marginBottom: "5px", textAlign: "center"}}>Kedves felhasználó!</h1>
+          <div style={{ overflowY: "scroll", height: "35vh", width: "50vw"}}>
           <p>Üdvözlünk az oldalunkon. Itt az összes (interneten fellelhető) magyarországi autósiskolát keresheted, hely alapján. Az iskolát jelölő markerre kattintva további információkat érhetsz el az iskolával kapcsolatban. Az iskolákat (A, B, C kategóriában) a statisztikai adatok alapján besoroltuk (de ezek az adatok nem lettek mind ember által ellenőrizve, így csak hozzávetőleges képet adhatnak a szolgáltatás minőségéről). Az iskola nevére kattintva a markerre ugorhatsz a térképen.</p>
           <p style={{ fontWeight: "bold", color: "red"}}>Az oldal használatából, illetve az adatok értelmezéséből felmerülő problémákért jogi felelősséget nem vállalunk!</p>
           <p>Hiba észelése esetén a <a href="https://github.com/watchingdogs/autosiskola">GitHub-on</a> issue nyitásával tudod jelezni a problémát a fejlesztők felé.</p>
