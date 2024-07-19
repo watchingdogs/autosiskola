@@ -6,18 +6,26 @@ import './App.css';
 import iskolak from './data/iskolak.json';
 import "leaflet-loading";
 import "leaflet-loading/src/Control.Loading.css"
+import MarkerClusterGroup from "@changey/react-leaflet-markercluster";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+import { Popup as PopupComponent } from "reactjs-popup";
+import Cookies from "universal-cookie"
+const cookies = new Cookies();
 
+//Set default icon for markers
 delete L.Icon.Default.prototype._getIconUrl;
-
 L.Icon.Default.mergeOptions({
     iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
     iconUrl: require('leaflet/dist/images/marker-icon.png'),
     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
 
-function Dragger({category, setTopSchools, latlong}) {
+function Dragger({category, setTopSchools, latlong, setMarkers}) {
+  //Set colors for markers
   var colors = ["red", "green", "gold", "blue", "grey", "orange", "black", "violet", "yellow"];
-  
+  //Array for markers to render
+  var markerComponentArray = [];
 
   React.useEffect(() => {
     MapUpdater();
@@ -32,12 +40,10 @@ function Dragger({category, setTopSchools, latlong}) {
 
 
   function MapUpdater() {
-    map.eachLayer((layer) => {
-      if (layer instanceof L.Marker) {
-        map.removeLayer(layer);
-      }
-    })
+  setMarkers([]);
+  markerComponentArray = [];
   var labels = document.getElementsByName('categoryLabel');
+  //Reset legend colors
   for (var i = 0; i < labels.length; i++) {
     labels[i].style.color = 'white';
   }
@@ -47,6 +53,7 @@ function Dragger({category, setTopSchools, latlong}) {
     var labels = document.getElementsByName('categoryLabel');
     for (var i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i].value === cat) {
+        //Set legend color for marker (if category matches)
         labels[i].style.color = color;
       }
     }
@@ -54,6 +61,7 @@ function Dragger({category, setTopSchools, latlong}) {
         var colorIndex = category.indexOf(cat) % 9;
         var latlng = L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]);
         if (map.getBounds().contains(latlng) && feature.properties.tags.includes(cat)) {
+          //Use colors from the repo of pointhi (refer to array above to see marker colors)
           var icon = new L.Icon({
             iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-' + colors[colorIndex] + '.png',
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -66,10 +74,9 @@ function Dragger({category, setTopSchools, latlong}) {
           <h1>${feature.properties.name}</h1>
           <p style="display: inline;"><p style="display: inline; font-weight: bold;">Kategóriák:</p> ${feature.properties.tags.join(', ')}</p>
           `
-
           category.forEach(function(type) {
             if (feature.properties.overall && feature.properties.overall[type]) {
-                popUpText += `<p style="margin: 0px"><strong  style="margin: 0px">Overall ${type}:</strong> ${feature.properties.overall[type]}</p>`;
+                popUpText += `<p style="margin: 0px"><strong  style="margin: 0px">Pontszám ${type}:</strong> ${feature.properties.overall[type]}</p>`;
             }
         });
     
@@ -100,6 +107,7 @@ function Dragger({category, setTopSchools, latlong}) {
                     for (var key in stats["ÁKÓ"][type]) {
                         popUpText += `<p><strong>ÁKÓ ${type} ${key}:</strong></p>`;
                         for (var key2 in stats["ÁKÓ"][type][key]) {
+                            //Fucked one liner
                             popUpText += `<p style="margin-bottom: 0px; margin-top:0px"><strong style="margin-bottom: 0px; margin-top:0px">${JSON.stringify(stats["ÁKÓ"][type][key][key2]["year"])} ${JSON.stringify(stats["ÁKÓ"][type][key][key2]["quarter"])}. negyedév:</strong> ${JSON.stringify(stats["ÁKÓ"][type][key][key2]["value"]).replace(/(\")/g,"")}</p>`;
                         }
                   }
@@ -108,6 +116,7 @@ function Dragger({category, setTopSchools, latlong}) {
                     for (var key in stats["VSM"][type]) {
                         popUpText += `<p><strong>VSM ${type} ${key}:</strong></p>`;
                         for (var key2 in stats["VSM"][type][key]) {
+                            //And one more time
                             popUpText += `<p style="margin-bottom: 0px; margin-top:0px"><strong style="margin-bottom: 0px; margin-top:0px">${JSON.stringify(stats["VSM"][type][key][key2]["year"])} ${JSON.stringify(stats["VSM"][type][key][key2]["quarter"])}. negyedév:</strong> ${JSON.stringify(stats["VSM"][type][key][key2]["value"]).replace(/(\")/g,"")}</p>`;
                         }
                   }
@@ -127,7 +136,7 @@ if (category.length === 0) {
   return;
 }
 
-  //get top schools
+  //Get schoolsin map bounds
   var schoolsInBounds = [];
   iskolak.features.forEach((feature) => {
     var latlng = L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]);
@@ -145,30 +154,24 @@ if (category.length === 0) {
         if (school.properties.overall && school.properties.overall[category[j]]) {
           var lat = parseFloat(school.geometry.coordinates[1]);
           var lng = parseFloat(school.geometry.coordinates[0]);
+          //Make school table data
           topSchools.push({
             name: school.properties.name + " " + category[j] + " kategóriában",
             overall: school.properties.overall[category[j]],
             lat: lat,
-            lng: lng,
-            onClick: function() {
-              alert(lat + " " + lng)
-            }
+            lng: lng
           })
-          console.log(school.properties.name + " " + category[j] + " kategóriában ", lat, lng)
         }
       }
     }
 
-console.log(topSchools)
-
+ //Sort top schools by overall score
  topSchools =  topSchools.sort(function(a, b) {
       return b.overall - a.overall;
   })
+  //Get top 50 schools
   topSchools = topSchools.slice(0, 50);
-  console.log(topSchools)
-
   setTopSchools(topSchools);
-
   }
 
     const map = useMapEvents({
@@ -190,19 +193,16 @@ console.log(topSchools)
 
 export const MainMap = (props) => {
 
-  
-    var mapBounds = L.latLngBounds(iskolak.features.map(function(feature) {
-        return L.geoJSON(feature).getBounds();
-    }));
-    
-    var mapCenter = mapBounds.getCenter();
-
+  const [markers, setMarkers] = React.useState([]);
     return (
         <MapContainer loadingControl={true}  center={props.center} zoom={props.zoom} style={{height: "100vh", width: "100%"}} minZoom={9}>
           <Dragger category={props.data} setTopSchools={props.setTopSchools} latlong={props.latlong}/>
           <TileLayer
             url="https://api.mapbox.com/styles/v1/erzsil196/clxrvhy6w00p301qw1ibgez6w/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXJ6c2lsMTk2IiwiYSI6ImNseHJ2OWU5ODB5bmEyc3F3d210NXVkczIifQ.Xl_oYoTm89cQLKi8Z3HsrQ"
           />
+          <MarkerClusterGroup>
+            {markers}
+          </MarkerClusterGroup>
         </MapContainer>
     )
 }
@@ -220,7 +220,8 @@ function LicenseSelector({setData}) {
         selectedTypes.push(checkboxes[i].value);
       }
     }
-    if (selectedTypes.length >= 4) {
+    // The user can select up to 9 license types
+    if (selectedTypes.length >= 9) {
       var checkboxes = document.getElementsByName('categoryCheckbox');
       for (var i = 0; i < checkboxes.length; i++) {
         if (!checkboxes[i].checked) {
@@ -233,7 +234,6 @@ function LicenseSelector({setData}) {
         checkboxes[i].disabled = false;
       }
     }
-    
     setData(selectedTypes);
   }
 
@@ -295,12 +295,39 @@ function App() {
   const [ category, setCategory ] = React.useState([]);
   const [ topSchools, setTopSchools ] = React.useState([]);
   const [ latlong, setLatlong ] = React.useState([]);
+  const [ open, setOpen ] = React.useState(true);
+  const closeModal = () => {
+    setOpen(false);
+    cookies.set("popup", "closed", { path: "/" , maxAge: 60*60*1});
+  }
+
+  React.useEffect(() => {
+    if (cookies.get("popup") === "closed") {
+      setOpen(false);
+    }
+  }, [])
 
   return (
     <div className="App">
+                      <PopupComponent open={open} closeOnDocumentClick onClose={closeModal}>
+        <div className="modal" style={{backgroundColor: "white", width: "50vw", height: "50vh", borderRadius: "10px"}} >
+          <p className="close" onClick={closeModal} style={{textAlign: "right", cursor: "pointer", fontSize: "2em", marginRight: "10px", marginBottom: "0px"}}>
+            &times;
+          </p>
+          <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+          <h1 style={{ marginTop: "0px", marginBottom: "5px", marginLeft: "10px", marginRight: "10px"}}>Kedves felhasználó!</h1>
+          <div style={{ overflowY: "scroll", height: "27vh", width: "40vw"}}>
+          <p>Üdvözlünk az oldalunkon. Itt az összes (interneten fellelhető) magyarországi autósiskolát keresheted, hely alapján. Az iskolát jelölő markerre kattintva további információkat érhetsz el az iskolával kapcsolatban. Az iskolákat (A, B, C kategóriában) a statisztikai adatok alapján besoroltuk (de ezek az adatok nem lettek mind ember által ellenőrizve, így csak hozzávetőleges képet adhatnak a szolgáltatás minőségéről). Az iskola nevére kattintva a markerre ugorhatsz a térképen.</p>
+          <p style={{ fontWeight: "bold", color: "red"}}>Az oldal használatából, illetve az adatok értelmezéséből felmerülő problémákért jogi felelősséget nem vállalunk!</p>
+          <p>Hiba észelése esetén a <a href="https://github.com/watchingdogs/autosiskola">GitHub-on</a> issue nyitásával tudod jelezni a problémát a fejlesztők felé.</p>
+          </div>
+          </div>
+        </div>
+      </PopupComponent>
        <div className="container-fluid">
             <div className="sidebar">
                 <h2>Jogosítvány kategóriák</h2>
+
                 <div>
                     <LicenseSelector setData={setCategory} />
                 </div>
