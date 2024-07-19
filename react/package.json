@@ -1,7 +1,6 @@
 {
   "name": "autosiskola",
   "version": "0.1.0",
-  "homepage": "https://watchingdogs.github.io/autosiskola",
   "private": true,
   "dependencies": {
     "@changey/react-leaflet-markercluster": "^4.0.0-rc1",
