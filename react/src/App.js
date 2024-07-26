@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Map, TileLayer, Marker, Popup, MapContainer, useMapEvents } from "react-leaflet";
+import { Map, TileLayer, Marker, Popup, MapContainer, useMapEvents, Circle } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import './App.css';
@@ -198,6 +198,41 @@ if (category.length === 0) {
     return null
   }
 
+
+function LocateUser() {
+  const [position, setPosition] = React.useState(null);
+
+  const blueCircleSvg = `
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+    <circle cx="10" cy="10" r="10" fill="#fefdfe"/>
+    <circle cx="10" cy="10" r="8.5" fill="#005db7"/>
+  </svg>
+  `;
+
+const blueCircleIconUrl = `data:image/svg+xml;base64,${btoa(blueCircleSvg)}`;
+  const userIcon = new L.Icon({
+    iconUrl: blueCircleIconUrl,
+    iconSize: [25, 25], // size of the icon
+    iconAnchor: [12, 12], // point of the icon which will correspond to marker's location
+  });
+
+  const map = useMapEvents({
+    locationfound(e) {
+      setPosition(e.latlng);
+      map.flyTo(e.latlng, map.getZoom());
+    },
+  });
+
+  React.useEffect(() => {
+    map.locate({ setView: true, maxZoom: 16, enableHighAccuracy: true });
+  }, [map]);
+
+  return position === null ? null : (
+    <Marker position={position} icon={userIcon} />
+  );
+}
+
+
 export const MainMap = (props) => {
 
   const [markers, setMarkers] = React.useState([]);
@@ -207,9 +242,10 @@ export const MainMap = (props) => {
           <TileLayer
             url="https://api.mapbox.com/styles/v1/erzsil196/clxrvhy6w00p301qw1ibgez6w/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXJ6c2lsMTk2IiwiYSI6ImNseHJ2OWU5ODB5bmEyc3F3d210NXVkczIifQ.Xl_oYoTm89cQLKi8Z3HsrQ"
           />
-          <MarkerClusterGroup>
+          <MarkerClusterGroup maxClusterRadius={50}>
             {markers}
           </MarkerClusterGroup>
+          <LocateUser />
         </MapContainer>
     )
 }
