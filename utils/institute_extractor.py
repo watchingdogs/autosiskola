@@ -22,7 +22,7 @@ def get_institutes():
 
 
 def extract_table_data(nkhid):
-    page = requests.get(f'https://vizsgakozpont.hu/ako_vsm?institution={nkhid}')
+    page = requests.get(f'https://vizsgakozpont.hu/ako_vsm?institution={str(nkhid).zfill(4)}')
     soup = BeautifulSoup(page.content, 'html.parser')
     tbodies = soup.find_all('tbody')
     # Ha nincs táblázat, a funkció üres listát ad vissza.

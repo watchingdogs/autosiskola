@@ -1,3 +1,7 @@
+# Jelenleg ez a fájl nincs használva, mivel megszűnt az API.
+# Korábban volt email cím, telefonszám, weboldal is az egyes iskoláknál.
+
+
 import requests
 
 
