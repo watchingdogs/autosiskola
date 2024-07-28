@@ -21,16 +21,18 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
 
-function Dragger({category, setTopSchools, latlong, setMarkers}) {
+function Dragger({category, setTopSchools, latlong, setMarkers, sidebarOpen}) {
   //Set colors for markers
   var colors = ["red", "green", "gold", "blue", "grey", "orange", "black", "violet", "yellow"];
   //Array for markers to render
   var markerComponentArray = [];
 
   // Todo, implement efficient way to do this (do not fire every 400ms)
-  setTimeout(() => {
-    map.invalidateSize();
-  }, 400);
+  React.useEffect(() => {
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 20)
+  }, [sidebarOpen])
 
   React.useEffect(() => {
     MapUpdater();
@@ -243,7 +245,7 @@ export const MainMap = (props) => {
   const [markers, setMarkers] = React.useState([]);
     return (
         <MapContainer loadingControl={true}  center={props.center} zoom={props.zoom} style={{height: "100vh", width: "100%"}}>
-          <Dragger category={props.data} setTopSchools={props.setTopSchools} latlong={props.latlong} setMarkers={setMarkers}/>
+          <Dragger category={props.data} setTopSchools={props.setTopSchools} latlong={props.latlong} setMarkers={setMarkers} sidebarOpen={props.sidebarOpen}/>
           <TileLayer
             url="https://api.mapbox.com/styles/v1/erzsil196/clxrvhy6w00p301qw1ibgez6w/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXJ6c2lsMTk2IiwiYSI6ImNseHJ2OWU5ODB5bmEyc3F3d210NXVkczIifQ.Xl_oYoTm89cQLKi8Z3HsrQ"
           />
@@ -396,7 +398,7 @@ function App() {
                 </div>
             </div>
             <div className="map" style={{height: "100vh", width: "100%"}}>
-                <MainMap center={[47.168463, 19.395633]} zoom={8} data={category} setTopSchools={setTopSchools} latlong={latlong}/>
+                <MainMap center={[47.168463, 19.395633]} zoom={8} data={category} setTopSchools={setTopSchools} latlong={latlong} sidebarOpen={sidebarOpen}/>
             </div>
         </div>
     </div>
