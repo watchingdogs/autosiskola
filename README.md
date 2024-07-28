@@ -47,6 +47,6 @@ A project nyílt forráskódú, és a weboldal is bárki számára elérhető. N
 
 # Közreműködők
 
-@123a456b789c csinálta a weboldal nagyrészét. Az eredeti PoC után ő tette használhatóvá és élvezhetővé az egészet. Nélküle nem fejeződhetett volna be a project.
+[@123a456b789c](https://github.com/watchingdogs/autosiskola/commits?author=123a456b789c) csinálta a weboldal nagyrészét. Az eredeti PoC után ő tette használhatóvá és élvezhetővé az egészet. Nélküle nem fejeződhetett volna be a project.
 
-@watchingdogs felelős az adatok feldolgozásáért és CI/CD-ért.
+[@watchingdogs](https://github.com/watchingdogs/autosiskola/commits?author=watchingdogs) felelős az adatok feldolgozásáért és CI/CD-ért.
