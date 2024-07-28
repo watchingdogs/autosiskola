@@ -38,7 +38,7 @@ A nagyobb városokban nehéz magabiztosan iskolát választani. Mi ezt a problé
 
 Amennyiben a KAV nem tervez saját weboldalt létrehozni, már az alábbi változások is sokat számítanának:
 - Nyílt REST API az előző évek összes adatáról, nem csak a legutóbbi kettő, és ne kelljen PDF-eket parsolni. Ez lehetővé tenné az iskolák hosszútávú értékelését, lehetne látni trendeket is.
-- Egy mindent tartalmazó általános Képzési Költség (KK) oublikálása, ami nem tér el adminisztrációs, kezelési, kiállításidíjakkal. Jelenleg ezt az iskolák csak a legeldugodtabb menük legalján mutatják be.
+- Egy mindent tartalmazó általános Képzési Költség (KK) oublikálása, ami nem tér el adminisztrációs, kezelési, kiállítási díjakkal. Jelenleg ezt az iskolák csak a legeldugodtabb menük legalján mutatják be.
 - Elméleti VSM felbontása E-Titános és tantermi oktatásra, vagy az E-Titán teljes kihagyása a statisztikákból, mivel az csak a tanuló teljesítményétől / motivációjától függ.
 - Esetleg az ÁKÓ és a gyakorlati VSM lebontása külön oktatókra.
 
@@ -46,19 +46,7 @@ Amennyiben a KAV nem tervez saját weboldalt létrehozni, már az alábbi válto
 A project nyílt forráskódú, és a weboldal is bárki számára elérhető. Nincsenek nagy költségeink, csak a domainek, meg majd a jövőben a szerver fenntartása. Amennyiben hozzájárulnál ezekhez, vagy csak támogatnál, [azt itt teheted](https://github.com/sponsors/watchingdogs).
 
 # Közreműködők
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/123a456b789c"><img src="https://avatars.githubusercontent.com/u/50078004?v=4?s=100" width="100px;" alt="123a456b789c"/><br /><sub><b>123a456b789c</b></sub></a><br /><a href="#design-123a456b789c" title="Design">🎨</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/watchingdogs"><img src="https://avatars.githubusercontent.com/u/69792238?v=4?s=100" width="100px;" alt="watchingdogs"/><br /><sub><b>watchingdogs</b></sub></a><br /><a href="#code-watchingdogs" title="Code">💻</a></td>
-    </tr>
-  </tbody>
-</table>
 
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
+@123a456b789c csinálta a weboldal nagyrészét. Az eredeti PoC után ő tette használhatóvá és élvezhetővé az egészet. Nélküle nem fejeződhetett volna be a project.
 
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+@watchingdogs felelős az adatok feldolgozásáért és CI/CD-ért.
