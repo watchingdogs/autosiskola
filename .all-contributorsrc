@@ -16,6 +16,15 @@
       "contributions": [
         "design"
       ]
+     }, {
+      "login": "watchingdogs",
+      "name": "watchingdogs",
+      "avatar_url": "https://avatars.githubusercontent.com/u/69792238?v=4",
+      "profile": "https://github.com/watchingdogs",
+      "contributions": [
+        "code"
+>>>>>>> main
+      ]
     }
   ]
 }
