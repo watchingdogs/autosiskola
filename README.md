@@ -52,6 +52,7 @@ A project nyílt forráskódú, és a weboldal is bárki számára elérhető. N
 <table>
   <tbody>
     <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/123a456b789c"><img src="https://avatars.githubusercontent.com/u/50078004?v=4?s=100" width="100px;" alt="123a456b789c"/><br /><sub><b>123a456b789c</b></sub></a><br /><a href="#design-123a456b789c" title="Design">🎨</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/watchingdogs"><img src="https://avatars.githubusercontent.com/u/69792238?v=4?s=100" width="100px;" alt="watchingdogs"/><br /><sub><b>watchingdogs</b></sub></a><br /><a href="#code-watchingdogs" title="Code">💻</a></td>
     </tr>
   </tbody>
