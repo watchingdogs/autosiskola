@@ -27,6 +27,11 @@ function Dragger({category, setTopSchools, latlong, setMarkers}) {
   //Array for markers to render
   var markerComponentArray = [];
 
+  // Todo, implement efficient way to do this (do not fire every 400ms)
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 400);
+
   React.useEffect(() => {
     MapUpdater();
   }, [category])
