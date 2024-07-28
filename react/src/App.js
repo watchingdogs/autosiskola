@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Map, TileLayer, Marker, Popup, MapContainer, useMapEvents, Circle } from "react-leaflet";
+import { TileLayer, Marker, Popup, MapContainer, useMapEvents} from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import './App.css';
@@ -339,6 +339,7 @@ function App() {
   const [ topSchools, setTopSchools ] = React.useState([]);
   const [ latlong, setLatlong ] = React.useState([]);
   const [ open, setOpen ] = React.useState(true);
+  const [ sidebarOpen, setSidebarOpen ] = React.useState(true);
   const closeModal = () => {
     setOpen(false);
     cookies.set("popup", "closed", { path: "/" , maxAge: 60*60*1});
@@ -350,8 +351,18 @@ function App() {
     }
   }, [])
 
+  React.useEffect(() => {
+    if (sidebarOpen) {
+      document.getElementsByClassName("sidebar")[0].style.display = "block";
+    } else {
+      document.getElementsByClassName("sidebar")[0].style.display = "none";
+    }
+  })
+
   return (
     <div className="App">
+      <button id="sidebar-button" onClick={() => setSidebarOpen(!sidebarOpen)} style={{position: "absolute", top: "10px", right: "10px", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Menü</button>
+      <button  onClick={() => setOpen(true)} style={{position: "absolute", top: "50px", right: "10px", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Súgó</button>
                       <PopupComponent open={open} closeOnDocumentClick onClose={closeModal}>
         <div className="modal" style={{backgroundColor: "white", width: "70vw", height: "70vh", borderRadius: "10px"}} >
           <p className="close" onClick={closeModal} style={{textAlign: "right", cursor: "pointer", fontSize: "2em", marginRight: "10px", marginBottom: "0px"}}>
