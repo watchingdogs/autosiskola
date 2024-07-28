@@ -49,6 +49,13 @@ A project nyílt forráskódú, és a weboldal is bárki számára elérhető. N
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/watchingdogs"><img src="https://avatars.githubusercontent.com/u/69792238?v=4?s=100" width="100px;" alt="watchingdogs"/><br /><sub><b>watchingdogs</b></sub></a><br /><a href="#code-watchingdogs" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
