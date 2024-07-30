@@ -8,6 +8,44 @@ body, html {
   font-style: normal;
 }
 
+.modal {
+  background-color: white;
+  width: 70vw;
+  height: 65vh;
+  border-radius: 10px;
+}
+
+.close {
+  text-align: right;
+  cursor: pointer;
+  font-size: 2em;
+  margin-right: 10px;
+  margin-bottom: 0px;
+}
+
+.textContainer {
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  overflow-y: scroll;
+}
+
+.textContainer > h1 {
+  margin-top: 0px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.textContainer > div {
+  height: 35vh;
+  width: 50vw;
+}
+
+.textContainer > div > p {
+  font-weight: bold;
+  color: red;
+}
 
 .sidebar > p, .sidebar > h2, .sidebar > * {
   color: white;
@@ -22,23 +60,27 @@ label {
   display: flex;
   height: 100%;
 }
+
 .sidebar {
-  overflow-y: auto;
+  overflow-y: scroll;
   width: 30vw;
   min-width: 200px;
   background:#202632;
   padding: 10px;
   padding-bottom: 0;
 }
+
 #license-types {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
 }
+
 #license-types label {
   display: inline-block;
   margin-right: 4px;
 }
+
 #map {
   flex: 1;
 }

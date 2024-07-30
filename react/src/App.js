@@ -77,42 +77,29 @@ function Dragger({category, setTopSchools, latlong, setMarkers, sidebarOpen}) {
             popupAnchor: [1, -34],
             shadowSize: [41, 41]
           })
-          var popUpText = `
-          <h1>${feature.properties.name}</h1>
-          <p style="display: inline;"><p style="display: inline; font-weight: bold;">Kategóriák:</p> ${feature.properties.tags.join(', ')}</p>
-          `
+          var popUpText = `<h1>${feature.properties.name}</h1>`
+          
           category.forEach(function(type) {
             if (feature.properties.overall && feature.properties.overall[type]) {
-                popUpText += `<p style="margin: 0px"><strong  style="margin: 0px">Pontszám ${type}:</strong> ${feature.properties.overall[type]}</p>`;
+                popUpText += `<p style="margin: 0px"><strong  style="margin: 0px">${type} Pontszám:</strong> ${feature.properties.overall[type]}</p>`;
             }
-        });
+          });
     
         // Add additional details
         popUpText += `<p style="margin-bottom: 0px; margin-top:0px"><strong style="margin-bottom: 0px; margin-top: 0px">Van E-Titán?:</strong> ${ new Boolean(feature.properties.etitan) ? "Igen" : "Nem"}</p>`;
-        if (feature.properties.email) {
-            popUpText += `<p style="margin-bottom: 0px; margin-top:0px"><strong style="margin-bottom: 0px; margin-top:0px">Email:</strong> <a href="mailto:${feature.properties.email}">${feature.properties.email}</a></p>`;
-        }
-        if (feature.properties.web) {
-            popUpText += `<p style="margin-bottom: 0px; margin-top:0px"><strong style="margin-bottom: 0px; margin-top:0px">Web:</strong> <a href="${feature.properties.web}" target="_blank">${feature.properties.web}</a></p>`;
-        }
-        if (feature.properties.phone) {
-            popUpText += `<p style="margin-bottom: 0px; margin-top:0px"><strong style="margin-bottom: 0px; margin-top:0px">Telefonszám:</strong> ${feature.properties.phone}</p>`;
-        }
-        if (feature.properties.address) {
-            popUpText += `<p style="margin-bottom: 0px; margin-top:0px"><strong style="margin-bottom: 0px; margin-top:0px">Cím:</strong> ${feature.properties.address}</p>`;
-        }
-        if (feature.properties.nkhid) {
-            popUpText += `<p style="margin-bottom: 0px; margin-top:0px"><strong style="margin-bottom: 0px; margin-top:0px">NKHAzon:</strong> ${feature.properties.nkhid}</p>`;
-        }
+        popUpText += `<p style="margin-bottom: 0px; margin-top:0px"><strong style="margin-bottom: 0px; margin-top: 0px">Cím:</strong> ${feature.properties.address}</p>`;
+        popUpText += `<p style="margin-bottom: 0px; margin-top:0px"><strong style="margin-bottom: 0px; margin-top: 0px">Kategóriák:</strong> ${feature.properties.tags.join(', ')}</p>`
+        popUpText += `<p style="margin-bottom: 0px; margin-top:0px"><strong style="margin-bottom: 0px; margin-top: 0px">NKHAzon:</strong> ${feature.properties.nkhid}</p>`;
+
 
         // Show stats for the selected types
         category.forEach(function(type) {
             if (feature.properties.stats) {
                 var stats = feature.properties.stats;
-                popUpText += `<h1><strong>Statisztikai adatok ${type} kategóriához</strong></h1>`;
+                popUpText += `<h1><strong>${type} Statisztikai adatok</strong></h1>`;
                 if (stats["ÁKÓ"] && stats["ÁKÓ"][type]) {
                     for (var key in stats["ÁKÓ"][type]) {
-                        popUpText += `<p><strong>ÁKÓ ${type} ${key}:</strong></p>`;
+                        popUpText += `<p style="margin-bottom: 0px;"><strong>ÁKÓ ${type} ${key}:</strong></p>`;
                         for (var key2 in stats["ÁKÓ"][type][key]) {
                             //Fucked one liner
                             popUpText += `<p style="margin-bottom: 0px; margin-top:0px"><strong style="margin-bottom: 0px; margin-top:0px">${JSON.stringify(stats["ÁKÓ"][type][key][key2]["year"])} ${JSON.stringify(stats["ÁKÓ"][type][key][key2]["quarter"])}. negyedév:</strong> ${JSON.stringify(stats["ÁKÓ"][type][key][key2]["value"]).replace(/(\")/g,"")}</p>`;
@@ -121,7 +108,7 @@ function Dragger({category, setTopSchools, latlong, setMarkers, sidebarOpen}) {
                 }
                 if (stats["VSM"] && stats["VSM"][type]) {
                     for (var key in stats["VSM"][type]) {
-                        popUpText += `<p><strong>VSM ${type} ${key}:</strong></p>`;
+                        popUpText += `<p style="margin-bottom: 0px;"><strong>VSM ${type} ${key}:</strong></p>`;
                         for (var key2 in stats["VSM"][type][key]) {
                             //And one more time
                             popUpText += `<p style="margin-bottom: 0px; margin-top:0px"><strong style="margin-bottom: 0px; margin-top:0px">${JSON.stringify(stats["VSM"][type][key][key2]["year"])} ${JSON.stringify(stats["VSM"][type][key][key2]["quarter"])}. negyedév:</strong> ${JSON.stringify(stats["VSM"][type][key][key2]["value"]).replace(/(\")/g,"")}</p>`;
@@ -369,32 +356,34 @@ function App() {
   return (
     <div className="App">
       <button id="sidebar-button" onClick={() => setSidebarOpen(!sidebarOpen)} style={{position: "absolute", top: "10px", right: "10px", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Menü</button>
-      <button  onClick={() => setOpen(true)} style={{position: "absolute", top: "50px", right: "10px", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Súgó</button>
+      <button onClick={() => setOpen(true)} style={{position: "absolute", top: "50px", right: "10px", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Súgó</button>
                       <PopupComponent open={open} closeOnDocumentClick onClose={closeModal}>
-        <div className="modal" style={{backgroundColor: "white", width: "70vw", height: "70vh", borderRadius: "10px"}} >
-          <p className="close" onClick={closeModal} style={{textAlign: "right", cursor: "pointer", fontSize: "2em", marginRight: "10px", marginBottom: "0px"}}>
-            &times;
-          </p>
-          <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
-          <h1 style={{ marginTop: "0px", marginBottom: "5px", textAlign: "center"}}>Kedves felhasználó!</h1>
-          <div style={{ overflowY: "scroll", height: "35vh", width: "50vw"}}>
-          <p>Üdvözlünk az oldalunkon. Itt az összes (interneten fellelhető) magyarországi autósiskolát keresheted, hely alapján. Az iskolát jelölő markerre kattintva további információkat érhetsz el az iskolával kapcsolatban. Az iskolákat (A, B, C kategóriában) a statisztikai adatok alapján besoroltuk (de ezek az adatok nem lettek mind ember által ellenőrizve, így csak hozzávetőleges képet adhatnak a szolgáltatás minőségéről). Az iskola nevére kattintva a markerre ugorhatsz a térképen.</p>
-          <p style={{ fontWeight: "bold", color: "red"}}>Az oldal használatából, illetve az adatok értelmezéséből felmerülő problémákért jogi felelősséget nem vállalunk!</p>
-          <p>Hiba észelése esetén a <a href="https://github.com/watchingdogs/autosiskola">GitHub-on</a> issue nyitásával tudod jelezni a problémát a fejlesztők felé.</p>
-          </div>
+
+        <div className="modal">
+          <p className="close" onClick={closeModal}>&times;</p>
+          <div className="textContainer">
+            <h1>Magyarországi autósiskolák térképe</h1>
+            <div>
+              <ol>
+                <li>Válaszd ki a jogosítvány kategóriát.</li>
+                <li>Zoomolj a térképen arra a területre, ahol keresel.</li>
+                <li>Az A, B és C kategóriák esetében a bal oldalon megjelennek az adott terület iskolái rangsorolva, a besorolás alapját az <a href="https://github.com/watchingdogs/autosiskola#a-statisztikák-és-a-rangsor-jelentése">Átlagos Képzési Óraszám és a forgalmi Vizsga Sikerességi Mutató</a> képezik. A rangsorban mindig csak a képernyőn látható iskolák szerepelnek.</li>
+                <li>Egy-egy térképjelölőre kattintva meg lehet nézni az adott iskola legutóbbi két negyedéves statisztikáját, valamint egyéb elérhető infókat.</li>
+              </ol>
+              <p>Részletes magyarázat <a href="https://github.com/watchingdogs/autosiskola" autofocus>GitHub-on található</a>.</p>
+            </div>
           </div>
         </div>
       </PopupComponent>
        <div className="container-fluid">
             <div className="sidebar">
+                <h2>Rangsor</h2>
+                <div>
+                    <SchoolTable topSchools={topSchools} setLatlong={setLatlong}/>
+                </div>
                 <h2>Jogosítvány kategóriák</h2>
-
                 <div>
                     <LicenseSelector setData={setCategory} />
-                </div>
-                <h2>Legjobb* iskolák</h2>
-                <div style={{height: "65vh", overflowY: "scroll"}}>
-                    <SchoolTable topSchools={topSchools} setLatlong={setLatlong}/>
                 </div>
             </div>
             <div className="map" style={{height: "100vh", width: "100%"}}>
