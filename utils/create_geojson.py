@@ -5,8 +5,9 @@ import os
 import json
 
 
-GMAPS_KEY = os.environ["GMAPS_API_KEY"]
+# REPO ROOTBÓL KELL FUTTATNI, VAGY A PATHOT ÁTÁLLíTANI!!!
 geojson_path = 'react/src/data/iskolak.json'
+GMAPS_KEY = os.environ["GMAPS_API_KEY"]
 
 
 def get_etitan_list():
@@ -28,10 +29,10 @@ def get_etitan_list():
     return sorted(list(set(nkhidlist)))
 
 
-def category_finder(df):
+def category_finder(df, id):
     "Ad egy listát az engedélyezett jogosítványkategóriákról."
     categories = ["AM", "A1", "A2", "A", "B", "BE", "C1", "C1E", "C", "CE", "D1", "D1E", "D", "DE", "K", "T", "Troli"]
-    values = df.loc[df[2] == str(4050)].values[0][5:5+len(categories)]
+    values = df.loc[df[2] == str(id)].values[0][5:5+len(categories)]
     tags = [categories[i] for i in range(len(categories)) if values[i] != '']
 
     return tags
@@ -70,7 +71,7 @@ for id in institute_ids:
             # Ez most csak akkor fut le, ha frissítjük az adatokat.
             id_found = True
 
-            feature['properties']['tags'] = category_finder(kepzo_df)
+            feature['properties']['tags'] = category_finder(kepzo_df, id)
             feature['properties']['overall'] = overall if not kaverror else None
             feature['properties']['stats'] = formatted['stats'] if not kaverror else None
             feature['properties']['etitan'] = True if id in etitan_list else False
@@ -101,10 +102,10 @@ for id in institute_ids:
                 ]
             },
             "properties": {
-                "name": kepzo_df.loc[kepzo_df[2] == str(int(id))][1].values[0],
+                "name": kepzo_df.loc[kepzo_df[2] == str(id)][1].values[0],
                 "address": address, # Ide lehetne a Google APIt használva magyar formátumba rakni a címeket is.
                 "nkhid": id,
-                "tags": category_finder(kepzo_df),
+                "tags": category_finder(kepzo_df, id),
                 "overall": overall if not kaverror else None,
                 "stats": formatted['stats'] if not kaverror else None,
                 "etitan": True if id in etitan_list else False
