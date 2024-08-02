@@ -334,6 +334,7 @@ function App() {
   const [ latlong, setLatlong ] = React.useState([]);
   const [ open, setOpen ] = React.useState(true);
   const [ sidebarOpen, setSidebarOpen ] = React.useState(true);
+  const [ daSelectaOpen, setDaSelecta] = React.useState(true)
   const closeModal = () => {
     setOpen(false);
     cookies.set("popup", "closed", { path: "/" , maxAge: 60*60*1});
@@ -346,6 +347,27 @@ function App() {
   }, [])
 
   React.useEffect(() => {
+    console.log(daSelectaOpen)
+    if (daSelectaOpen) {
+      document.getElementById('da-selecta').style.display = "block";
+      document.getElementById('da-table').style.height = "60vh";
+    }
+  }, [daSelectaOpen])
+
+  React.useEffect(() => {
+    var checkboxes = document.getElementsByName('categoryCheckbox');
+    for (var i = 0; i < checkboxes.length; i++) {
+      if (checkboxes[i].checked) {
+        document.getElementById('da-selecta').style.display = "none";
+        document.getElementById('da-table').style.height = "95vh";
+      }
+    }
+    setDaSelecta(false);
+  }, [category])
+
+
+
+  React.useEffect(() => {
     if (sidebarOpen) {
       document.getElementsByClassName("sidebar")[0].style.display = "block";
     } else {
@@ -356,7 +378,8 @@ function App() {
   return (
     <div className="App">
       <button id="sidebar-button" onClick={() => setSidebarOpen(!sidebarOpen)} style={{position: "absolute", top: "10px", right: "10px", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Menü</button>
-      <button onClick={() => setOpen(true)} style={{position: "absolute", top: "50px", right: "10px", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Súgó</button>
+      <button onClick={() => setDaSelecta(true)} style={{position: "absolute", top: "50px", right: "10px", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Kategóriák</button>
+      <button onClick={() => setOpen(true)} style={{position: "absolute", top: "90px", right: "10px", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Súgó</button>
                       <PopupComponent open={open} closeOnDocumentClick onClose={closeModal}>
 
         <div className="modal">
@@ -370,20 +393,21 @@ function App() {
                 <li>Az A, B és C kategóriák esetében a bal oldalon megjelennek az adott terület iskolái rangsorolva, a besorolás alapját az <a href="https://github.com/watchingdogs/autosiskola#a-statisztikák-és-a-rangsor-jelentése">Átlagos Képzési Óraszám és a forgalmi Vizsga Sikerességi Mutató</a> képezik. A rangsorban mindig csak a képernyőn látható iskolák szerepelnek.</li>
                 <li>Egy-egy térképjelölőre kattintva meg lehet nézni az adott iskola legutóbbi két negyedéves statisztikáját, valamint egyéb elérhető infókat.</li>
               </ol>
-              <p>Részletes magyarázat <a href="https://github.com/watchingdogs/autosiskola" autofocus>GitHub-on található</a>.</p>
+              <p>Részletes magyarázat <a href="https://github.com/watchingdogs/autosiskola" autoFocus>GitHub-on található</a>.</p>
             </div>
           </div>
         </div>
       </PopupComponent>
        <div className="container-fluid">
             <div className="sidebar">
-                <h2>Rangsor</h2>
-                <div>
-                    <SchoolTable topSchools={topSchools} setLatlong={setLatlong}/>
-                </div>
+
+                <div id="da-selecta" style={{ marginBottom: "20px"}}>
                 <h2>Jogosítvány kategóriák</h2>
-                <div>
                     <LicenseSelector setData={setCategory} />
+                </div>
+                <div id="da-table" style={{overflowY: "scroll", height: "95vh"}}>
+                <h2>Rangsor</h2>
+                    <SchoolTable topSchools={topSchools} setLatlong={setLatlong}/>
                 </div>
             </div>
             <div className="map" style={{height: "100vh", width: "100%"}}>
