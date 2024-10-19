@@ -17,7 +17,7 @@
     "react-leaflet-markercluster": "^3.0.0-rc1",
     "react-scripts": "5.0.1",
     "reactjs-popup": "^2.0.6",
-    "universal-cookie": "^7.1.4",
+    "universal-cookie": "^7.2.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
