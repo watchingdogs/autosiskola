@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import os
 import logging
 
+
 '''
 TODO:
 - Kapcsolj be word wrapet.
