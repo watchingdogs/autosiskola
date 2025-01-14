@@ -7,7 +7,7 @@
 [<img src="https://github.com/user-attachments/assets/7ed9a22b-09a6-426c-9dae-efc5bbf167a4">](https://autosiskolaterkep.hu)
 
 ## Amire figyelni kell
-- A rangsorbeli előny önmagában nem jelenti, hogy egy iskola objektíven jobb, vannak kiváló iskolák 50 körüli pontszámmal is.
+- A rangsorbeli előny önmagában nem jelenti, hogy egy iskola objektíven jobb, **ez csak egy iránymutató eszköz**.
 - Ez az oldal csak az igazán rossz iskolákat segít elkerülni, mindenki hallott már horror-sztorikat sokadik buktatásról és bunkó oktatókról.
 - A térképen az iskolák irodája van megjelölve, nem a vezetés helyszíne vagy beszállási pontok. Ezek általában csak az iskolák weboldalán vannak fent.
 
@@ -34,18 +34,22 @@ A térképjelölőkön az OÁ az Országos Átlagot jelenti.
 A térképen jelölt iskolák és a statisztikájuk a [KAV nyilántartásából](https://vizsgakozpont.hu/ako_vsm) származnak. Ezekhez a címek és az engedélyezett kategóriák a [Közlekedési Hatóság Dokumentumtárjából](https://www.kozlekedesihatosag.kormany.hu/hu/dokumentum/466204) jönnek. Valamint, az E-Titán támogatása az [eduKRESZ partnerlistájából](https://edukresz.hu/edukresz-partnerek) tudható meg.
 
 ## Miért jött létre?
-A nagyobb városokban nehéz magabiztosan iskolát választani. Mi ezt a problémát próbáljuk megoldani, és egyszerűbbé tenni ezt a folyamatot mindenki számára. Nem a mi feladatunk lenne, hogy ezt megoldjuk, hanem a KAV-é, mivel náluk van az összes adat. Emellett sajnos az eduKRESZ egyik weboldala sem ad átfogó képet a biztos választáshoz, ezért jött létre ez a projekt.
+A nagyobb városokban nehéz magabiztosan iskolát választani. Mi ezt a problémát próbáljuk megoldani, és egyszerűbbé tenni ezt a folyamatot mindenki számára. Nem a mi feladatunk lenne, hogy ezt megoldjuk, hanem a KAV-é, mivel náluk van az összes adat. Emellett sajnos az eduKRESZ egyik weboldala sem ad átfogó képet a biztos választáshoz, ezért jött létre ez a projekt. 
 
 Amennyiben a KAV nem tervez saját weboldalt létrehozni, már az alábbi változások is sokat számítanának:
 - Nyílt REST API az előző évek összes adatáról, nem csak a legutóbbi kettő, és ne kelljen PDF-eket parsolni. Ez lehetővé tenné az iskolák hosszútávú értékelését, lehetne látni trendeket is.
-- Egy mindent tartalmazó általános Képzési Költség (KK) oublikálása, ami nem tér el adminisztrációs, kezelési, kiállítási díjakkal. Jelenleg ezt az iskolák csak a legeldugodtabb menük legalján mutatják be.
+- Egy mindent tartalmazó általános Képzési Költség (KK) publikálása, ami nem tér el adminisztrációs, kezelési, kiállítási díjakkal. Jelenleg ezt az iskolák csak a legeldugodtabb menük legalján mutatják be.
 - Elméleti VSM felbontása E-Titános és tantermi oktatásra, vagy az E-Titán teljes kihagyása a statisztikákból, mivel az csak a tanuló teljesítményétől / motivációjától függ.
 - Esetleg az ÁKÓ és a gyakorlati VSM lebontása külön oktatókra.
 
-# Támogatás
-A project nyílt forráskódú, és a weboldal is bárki számára elérhető. Nincsenek nagy költségeink, csak a domainek, meg majd a jövőben a szerver fenntartása. Amennyiben hozzájárulnál ezekhez, vagy csak támogatnál, [azt itt teheted](https://github.com/sponsors/watchingdogs).
+# Közreműködés
+## Kell a segítség!
+Még a jelenlegi állapotában is sok mindent lehetne tenni ezért a projectért. Mobilon jelenleg szinte használhatatlan a térképjelzők ugrálása miatt, de sok más egyebet is lehetne a UI-hoz tenni. Futtatásoknál a Google API használattal is lehetne spórolni. Valamint még tervben van a statisztikákból visszamenőleg egy trend grafikon is, mivel igazán a tartósan magas színvonal mutatja meg ha jó egy iskola. Ehhez a commitok közt ott vannak 2024 Q1-Q4 adatai, de talán 2023 Q4 is, de a maradék meg a hivatalos PDFekből kinyerhető.
 
-# Közreműködők
+## Támogatás
+A project nyílt forráskódú, és a weboldal is bárki számára elérhető. Nincsenek nagy költségeink, csak a domainek, a Google Geocoding API használata, meg majd a jövőben a szerver fenntartása. Amennyiben hozzájárulnál ezekhez, vagy csak támogatnál, [azt itt teheted](https://github.com/sponsors/watchingdogs).
+
+## Hall of Fame
 
 [@123a456b789c](https://github.com/watchingdogs/autosiskola/commits?author=123a456b789c) csinálta a weboldal nagyrészét. Az eredeti PoC után ő tette használhatóvá és élvezhetővé az egészet. Nélküle nem fejeződhetett volna be a project.
 
