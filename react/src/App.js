@@ -406,7 +406,7 @@ function App() {
                     <LicenseSelector setData={setCategory} />
                 </div>
                 <div id="da-table" style={{overflowY: "scroll", height: "95vh"}}>
-                <h2>Rangsor</h2>
+                <h2>Rangsor <a href="https://github.com/watchingdogs/autosiskola#a-statisztikák-és-a-rangsor-jelentése" style={{fontSize: "0.6em", verticalAlign: "super", color: "#bde6f9"}}>[Mi ez?]</a></h2>
                     <SchoolTable topSchools={topSchools} setLatlong={setLatlong}/>
                 </div>
             </div>

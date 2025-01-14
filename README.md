@@ -44,7 +44,7 @@ Amennyiben a KAV nem tervez saját weboldalt létrehozni, már az alábbi válto
 
 # Közreműködés
 ## Kell a segítség!
-Még a jelenlegi állapotában is sok mindent lehetne tenni ezért a projectért. Mobilon jelenleg szinte használhatatlan a térképjelzők ugrálása miatt, de sok más egyebet is lehetne a UI-hoz tenni. Futtatásoknál a Google API használattal is lehetne spórolni. Valamint még tervben van a statisztikákból visszamenőleg egy trend grafikon is, mivel igazán a tartósan magas színvonal mutatja meg ha jó egy iskola. Ehhez a commitok közt ott vannak 2024 Q1-Q4 adatai, de talán 2023 Q4 is, de a maradék meg a hivatalos PDFekből kinyerhető.
+Még a jelenlegi állapotában is sok mindent lehetne tenni ezért a projectért. Mobilon jelenleg szinte használhatatlan a térképjelzők ugrálása miatt, de sok más egyebet is lehetne a UI-hoz tenni. Futtatásoknál a Google API használattal is lehetne spórolni. Valamint még tervben van a statisztikákból visszamenőleg egy trend grafikon is, mivel igazán a tartósan magas színvonal mutatja meg ha jó egy iskola. Ehhez a commitok közt ott vannak 2024 Q1-Q4 adatai, de talán 2023 Q4 is, de a maradék meg a hivatalos PDFekből kinyerhető. Szintén amire érdemes figyelni, hogy a képzőszervek listájából kiderül, hogy elméletet és vagy gyakorlatot oktat egy iskola, de ez nincs szétválasztva. Legfontosabb viszont talán egy keresőmező lenne az iskoláknak.
 
 ## Támogatás
 A project nyílt forráskódú, és a weboldal is bárki számára elérhető. Nincsenek nagy költségeink, csak a domainek, a Google Geocoding API használata, meg majd a jövőben a szerver fenntartása. Amennyiben hozzájárulnál ezekhez, vagy csak támogatnál, [azt itt teheted](https://github.com/sponsors/watchingdogs).
