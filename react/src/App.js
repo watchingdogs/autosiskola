@@ -231,7 +231,7 @@ export const MainMap = (props) => {
 
   const [markers, setMarkers] = React.useState([]);
     return (
-        <MapContainer loadingControl={true}  center={props.center} zoom={props.zoom} style={{height: "100vh", width: "100%"}}>
+        <MapContainer loadingControl={true}  center={props.center} zoom={props.zoom} style={{height: "95vh", width: "100%"}}>
           <Dragger category={props.data} setTopSchools={props.setTopSchools} latlong={props.latlong} setMarkers={setMarkers} sidebarOpen={props.sidebarOpen}/>
           <TileLayer
             url="https://api.mapbox.com/styles/v1/erzsil196/clxrvhy6w00p301qw1ibgez6w/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXJ6c2lsMTk2IiwiYSI6ImNseHJ2OWU5ODB5bmEyc3F3d210NXVkczIifQ.Xl_oYoTm89cQLKi8Z3HsrQ"
@@ -313,7 +313,7 @@ function SchoolTable({topSchools, setLatlong}) {
         {topSchools.map((school) => {
           return (
                 <tr>
-                  <td onClick={() => setLatlong([school.lat, school.lng])}>{school.name}</td>
+                  <td style={{paddingTop: "5px", paddingBottom: "5px"}} onClick={() => setLatlong([school.lat, school.lng])}>{school.name}</td>
                   <td>{school.overall}</td>
                 </tr>
               )
@@ -350,6 +350,7 @@ function App() {
     console.log(daSelectaOpen)
     if (daSelectaOpen) {
       document.getElementById('da-selecta').style.display = "block";
+      document.getElementById('category-button').style.display = "none";
       document.getElementById('da-table').style.height = "60vh";
     }
   }, [daSelectaOpen])
@@ -358,8 +359,9 @@ function App() {
     var checkboxes = document.getElementsByName('categoryCheckbox');
     for (var i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i].checked) {
+        document.getElementById('category-button').style.display = "";
         document.getElementById('da-selecta').style.display = "none";
-        document.getElementById('da-table').style.height = "95vh";
+        document.getElementById('da-table').style.height = "85vh";
       }
     }
     setDaSelecta(false);
@@ -376,10 +378,11 @@ function App() {
   })
 
   return (
+    
     <div className="App">
-      <button id="sidebar-button" onClick={() => setSidebarOpen(!sidebarOpen)} style={{position: "absolute", top: "10px", right: "10px", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Menü</button>
-      <button onClick={() => setDaSelecta(true)} style={{position: "absolute", top: "50px", right: "10px", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Kategóriák</button>
-      <button onClick={() => setOpen(true)} style={{position: "absolute", top: "90px", right: "10px", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Súgó</button>
+      <div style={{backgroundColor: "#202632", height: "5vh"}}></div>
+      <button id="sidebar-button" onClick={() => setSidebarOpen(!sidebarOpen)} style={{position: "absolute", top: "10px", left: "10px", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Menü</button>
+      <button onClick={() => setOpen(true)} style={{position: "absolute", bottom: "10px", right: "10px", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Súgó</button>
                       <PopupComponent open={open} closeOnDocumentClick onClose={closeModal}>
 
         <div className="modal">
@@ -400,17 +403,17 @@ function App() {
       </PopupComponent>
        <div className="container-fluid">
             <div className="sidebar">
-
                 <div id="da-selecta" style={{ marginBottom: "20px"}}>
                 <h2>Jogosítvány kategóriák</h2>
                     <LicenseSelector setData={setCategory} />
                 </div>
+                <button onClick={() => setDaSelecta(true)} id="category-button" style={{position: "static", zIndex: "1000", backgroundColor: "#202632", color: "white", borderRadius: "5px", border: "none", fontSize: "1.5em", cursor: "pointer"}}>Kategóriák</button>
                 <div id="da-table" style={{overflowY: "scroll", height: "95vh"}}>
                 <h2>Rangsor <a href="https://github.com/watchingdogs/autosiskola#a-statisztikák-és-a-rangsor-jelentése" style={{fontSize: "0.6em", verticalAlign: "super", color: "#bde6f9"}}>[Mi ez?]</a></h2>
                     <SchoolTable topSchools={topSchools} setLatlong={setLatlong}/>
                 </div>
             </div>
-            <div className="map" style={{height: "100vh", width: "100%"}}>
+            <div className="map" style={{height: "95vh", width: "100%"}}>
                 <MainMap center={[47.168463, 19.395633]} zoom={8} data={category} setTopSchools={setTopSchools} latlong={latlong} sidebarOpen={sidebarOpen}/>
             </div>
         </div>
