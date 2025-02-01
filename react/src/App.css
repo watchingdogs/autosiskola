@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
-body, html {
+body,
+html {
   height: 100%;
   margin: 0;
   font-family: "Roboto", sans-serif;
@@ -24,10 +25,10 @@ body, html {
 }
 
 .textContainer {
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center; 
-  align-items: center; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow-y: scroll;
 }
 
@@ -47,9 +48,11 @@ body, html {
   color: red;
 }
 
-.sidebar > p, .sidebar > h2, .sidebar > * {
+.sidebar > p,
+.sidebar > h2,
+.sidebar > * {
   color: white;
-  scrollbar-color: #fff #202632 ;
+  scrollbar-color: #fff #202632;
 }
 
 label {
@@ -65,7 +68,7 @@ label {
   overflow-y: scroll;
   width: 30vw;
   min-width: 200px;
-  background:#202632;
+  background: #202632;
   padding: 10px;
   padding-bottom: 0;
 }
@@ -90,13 +93,22 @@ label {
   aspect-ratio: 1;
   border-radius: 50%;
   padding: 6px;
-  background:
-    conic-gradient(from 135deg at top,currentColor 90deg, #0000 0) 0 calc(50% - 4px)/17px 8.5px,
-    radial-gradient(farthest-side at bottom left,#0000 calc(100% - 6px),currentColor calc(100% - 5px) 99%,#0000) top right/50%  50% content-box content-box,
-    radial-gradient(farthest-side at top        ,#0000 calc(100% - 6px),currentColor calc(100% - 5px) 99%,#0000) bottom   /100% 50% content-box content-box;
+  background: conic-gradient(from 135deg at top, currentColor 90deg, #0000 0) 0 calc(50% - 4px) / 17px 8.5px,
+    radial-gradient(farthest-side at bottom left, #0000 calc(100% - 6px), currentColor calc(100% - 5px) 99%, #0000) top right/50% 50% content-box content-box,
+    radial-gradient(farthest-side at top, #0000 calc(100% - 6px), currentColor calc(100% - 5px) 99%, #0000) bottom / 100% 50% content-box content-box;
   background-repeat: no-repeat;
   animation: l11 1s infinite linear;
 }
-@keyframes l11{ 
-  100%{transform: rotate(1turn)}
+@keyframes l11 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.school-name-interactive {
+  cursor: pointer;
+}
+.school-name-interactive:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
