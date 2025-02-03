@@ -3,6 +3,7 @@ import * as React from "react"
 import { Marker, Popup, useMapEvents } from "react-leaflet"
 import iskolak from "../data/iskolak.json"
 import { COLORS } from "../helpers/constants"
+import  CommentBox from "./Comment.js"
 
 //Set default icon for markers
 delete L.Icon.Default.prototype._getIconUrl
@@ -100,6 +101,7 @@ export function Dragger({ categories, setTopSchools, latlong, setMarkers, isSide
             <Marker position={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]} icon={icon}>
               <Popup>
                 <div dangerouslySetInnerHTML={{ __html: popUpText }} />
+                <CommentBox id={feature.properties.nkhid} />
               </Popup>
             </Marker>
           )
@@ -168,3 +170,4 @@ export function Dragger({ categories, setTopSchools, latlong, setMarkers, isSide
   })
   return null
 }
+

@@ -4,7 +4,8 @@ import { SchoolTable } from "../SchoolTable"
 export function SideBar(props) {
   return (
     <div className="sidebar">
-      {props.isCategoriesShown ? (
+      <a href="/" style={{ color: "white" }}>Kilépés a főoldalra</a>
+      {true ? (
         <div id="da-selecta" style={{ marginBottom: "20px" }}>
           <h2>Jogosítvány kategóriák</h2>
           <LicenseSelector setCategories={props.setCategories} categories={props.categories} />
@@ -22,7 +23,7 @@ export function SideBar(props) {
             [Mi ez?]
           </a>
         </h2>
-        <SchoolTable topSchools={props.topSchools} setLatlong={props.setLatlong} />
+        <SchoolTable topSchools={props.topSchools} setLatlong={props.setLatlong}/>
       </div>
     </div>
   )
