@@ -26,7 +26,7 @@ export function SchoolTable({ topSchools, setLatlong }) {
           <th>Pontszám</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody style={{ maxHeight: "50px", overflowY: "auto" }}>
         {topSchools.map((school, index) => {
           return (
             <tr key={index}>

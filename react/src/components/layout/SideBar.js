@@ -11,7 +11,7 @@ export function SideBar(props) {
           <LicenseSelector setCategories={props.setCategories} categories={props.categories} />
         </div>
       ) : null}
-      <div id="da-table" style={{ overflowY: "scroll", height: "95vh" }}>
+      <div id="da-table" style={{ overflowY: "scroll", height: "calc(100% - 300px)" }}>
         <h2>
           Rangsor
           <a
@@ -23,7 +23,7 @@ export function SideBar(props) {
             [Mi ez?]
           </a>
         </h2>
-        <SchoolTable topSchools={props.topSchools} setLatlong={props.setLatlong}/>
+        <SchoolTable topSchools={props.topSchools} setLatlong={props.setLatlong} />
       </div>
     </div>
   )
