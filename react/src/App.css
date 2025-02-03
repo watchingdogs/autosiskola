@@ -65,8 +65,9 @@ label {
 }
 
 .sidebar {
+  height: 100vh;
   overflow-y: scroll;
-  width: 30vw;
+  width: 60vw;
   min-width: 200px;
   background: #202632;
   padding: 10px;

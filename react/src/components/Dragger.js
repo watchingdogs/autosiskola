@@ -3,6 +3,8 @@ import * as React from "react"
 import { Marker, Popup, useMapEvents } from "react-leaflet"
 import iskolak from "../data/iskolak.json"
 import { COLORS } from "../helpers/constants"
+import  CommentBox from "./Comment.js"
+import { Accordion } from "react-bootstrap"
 
 //Set default icon for markers
 delete L.Icon.Default.prototype._getIconUrl
@@ -99,7 +101,20 @@ export function Dragger({ categories, setTopSchools, latlong, setMarkers, isSide
           var marker = (
             <Marker position={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]} icon={icon}>
               <Popup>
+                <Accordion style={{ width: "100%" }} defaultActiveKey="0">
+                <Accordion.Item eventKey="0">
+                <Accordion.Header>Statisztika</Accordion.Header>
+                <Accordion.Body>
                 <div dangerouslySetInnerHTML={{ __html: popUpText }} />
+                </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="1">
+                <Accordion.Header>Vélemények</Accordion.Header>
+                <Accordion.Body>
+                <CommentBox id={feature.properties.nkhid} />
+                </Accordion.Body>
+                </Accordion.Item>
+                </Accordion>
               </Popup>
             </Marker>
           )
@@ -168,3 +183,4 @@ export function Dragger({ categories, setTopSchools, latlong, setMarkers, isSide
   })
   return null
 }
+

@@ -4,13 +4,14 @@ import { SchoolTable } from "../SchoolTable"
 export function SideBar(props) {
   return (
     <div className="sidebar">
-      {props.isCategoriesShown ? (
+      <a href="/" style={{ color: "white" }}>Kilépés a főoldalra</a>
+      {true ? (
         <div id="da-selecta" style={{ marginBottom: "20px" }}>
           <h2>Jogosítvány kategóriák</h2>
           <LicenseSelector setCategories={props.setCategories} categories={props.categories} />
         </div>
       ) : null}
-      <div id="da-table" style={{ overflowY: "scroll", height: "95vh" }}>
+      <div id="da-table" style={{ overflowY: "scroll", height: "calc(100% - 300px)" }}>
         <h2>
           Rangsor
           <a
