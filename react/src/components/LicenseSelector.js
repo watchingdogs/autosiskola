@@ -4,6 +4,15 @@ import { COLORS, LICENCE_TYPES } from "../helpers/constants"
 export function LicenseSelector({ setCategories, categories }) {
   var checkboxes = document.getElementsByName("categoryCheckbox")
 
+
+  useEffect(() => {
+    //Autoselect B category
+    setTimeout(() => {
+      var checkbox = document.getElementById("checkbox-B")
+      checkbox.checked = true
+      setCategories(["B"])
+    }, 100)
+  }, [])
   useEffect(() => {
     var labels = document.getElementsByName("categoryLabel")
     //Reset legend colors
@@ -51,7 +60,7 @@ export function LicenseSelector({ setCategories, categories }) {
     <div id="license-types">
       {LICENCE_TYPES.map((type) => (
         <label name="categoryLabel" key={type}>
-          <input type="checkbox" name="categoryCheckbox" value={type} onChange={handleChange} checked={categories.includes(type)} />
+          <input type="checkbox" name="categoryCheckbox" value={type} onChange={handleChange} checked={categories.includes(type)} id={"checkbox-" + type} />
           &nbsp;{type}
         </label>
       ))}

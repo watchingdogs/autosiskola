@@ -5,6 +5,7 @@ import iskolak from "../data/iskolak.json"
 import { COLORS } from "../helpers/constants"
 import  CommentBox from "./Comment.js"
 import { Accordion } from "react-bootstrap"
+import Stars from "./Stars.js"
 
 //Set default icon for markers
 delete L.Icon.Default.prototype._getIconUrl
@@ -111,7 +112,7 @@ export function Dragger({ categories, setTopSchools, latlong, setMarkers, isSide
                 <Accordion.Item eventKey="1">
                 <Accordion.Header>Vélemények</Accordion.Header>
                 <Accordion.Body>
-                <CommentBox id={feature.properties.nkhid} />
+                <Stars id={feature.properties.nkhid} />
                 </Accordion.Body>
                 </Accordion.Item>
                 </Accordion>

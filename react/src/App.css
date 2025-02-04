@@ -113,3 +113,11 @@ label {
   cursor: pointer;
   text-decoration: underline;
 }
+
+.leaflet-popup-content {
+  margin: 0;
+}
+
+.leaflet-popup-content-wrapper {
+padding: 0px;
+}
