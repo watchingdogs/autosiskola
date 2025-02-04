@@ -52,7 +52,7 @@ export function LicenseSelector({ setCategories, categories }) {
       {LICENCE_TYPES.map((type) => (
         <label name="categoryLabel" key={type}>
           <input type="checkbox" name="categoryCheckbox" value={type} onChange={handleChange} checked={categories.includes(type)} />
-          {type}
+          &nbsp;{type}
         </label>
       ))}
     </div>

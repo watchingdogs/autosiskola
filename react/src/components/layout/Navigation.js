@@ -11,7 +11,7 @@ const defaultButtonStyle = {
 }
 
 export function Navigation(props) {
-  const { openModal, showCategories, isSidebarOpen, setIsSidebarOpen } = props
+  const { showCategories, isSidebarOpen, setIsSidebarOpen } = props
 
   return (
     <>
@@ -25,24 +25,17 @@ export function Navigation(props) {
       >
         Menü
       </button>
-      <button
-        onClick={showCategories}
-        style={{
-          ...defaultButtonStyle,
-          top: "50px",
-        }}
-      >
-        Kategóriák
-      </button>
-      <button
-        onClick={openModal}
-        style={{
-          ...defaultButtonStyle,
-          top: "90px",
-        }}
-      >
-        Súgó
-      </button>
     </>
   )
 }
+/* Removed the following code from react/src/components/layout/Navigation.js, functionality temporarily disabled (but not removed):
+<button
+onClick={showCategories}
+style={{
+  ...defaultButtonStyle,
+  top: "50px",
+}}
+>
+Kategóriák
+</button>
+*/
