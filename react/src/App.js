@@ -15,9 +15,9 @@ import MapImage from "../src/map.png"
 import { Button, Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
+import { HashRouter, RouterProvider, createBrowserRouter, createHashRouter } from 'react-router-dom';
 
-const BrowserRouter = createBrowserRouter([
+const routes = createHashRouter([
   {
     path: '/',
     element: <Home />,
@@ -71,8 +71,8 @@ function MainNavigation() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/map">Térkép</Nav.Link>
-            <Nav.Link href="/about">Módszertan</Nav.Link>
+            <Nav.Link href="#/map">Térkép</Nav.Link>
+            <Nav.Link href="#/about">Módszertan</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -139,7 +139,7 @@ function About() {
 
 function App() {
     return (
-      <RouterProvider router={BrowserRouter} />
+      <RouterProvider router={routes} />
   )
 }
 
